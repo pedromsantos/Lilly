@@ -1,16 +1,11 @@
 {
-  "name": "glenn",
-  "version": "0.0.20",
-  "description": "Module for working with music theory concepts",
+  "name": "lilly",
+  "version": "0.0.1",
+  "description": "Module for working with Astrology concepts",
   "author": "Pedro Moreira Santos",
-  "homepage": "https://github.com/pedromsantos/glenn",
+  "homepage": "https://github.com/pedromsantos/Lilly",
   "keywords": [
-    "Music",
-    "Theory",
-    "Music Theory",
-    "Guitar",
-    "Tab",
-    "Tablature"
+    "Astrology"
   ],
   "license": "MIT",
   "main": "./dist/index.js",
@@ -36,10 +31,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:pedromsantos/glenn.git"
+    "url": "git@github.com:pedromsantos/Lilly.git"
   },
   "bugs": {
-    "url": "https://github.com/pedromsantos/glenn/issues"
+    "url": "https://github.com/pedromsantos/Lilly/issues"
   },
   "scripts": {
     "check_exports": "check-export-map",
@@ -55,7 +50,11 @@
     "types": "type-coverage -at-least 99",
     "prepare": "husky install"
   },
-  "dependencies": {},
+  "dependencies": {
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.26",
+    "tz-lookup": "^6.1.24"
+  },
   "devDependencies": {
     "@changesets/cli": "^2.26.0",
     "@commitlint/cli": "^17.4.2",
