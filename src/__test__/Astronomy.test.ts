@@ -1,7 +1,5 @@
 import { Days, JulianDay, Months } from '../Astronomy';
 
-// const error = 'Invalid input for calendar date or universal time.';
-
 describe('JulianDate', () => {
   const testCases: [number, Months, Days, number][] = [
     [2023, 7, 20, 2460145.5],
@@ -24,19 +22,16 @@ describe('JulianDate', () => {
     }
   );
 
-  it('should throw an error if the day is greater than 29 for February in a leap year', () => {
-    expect(() => new JulianDay(2024, 2, 30)).toThrow('Invalid day');
-  });
-
-  it('should throw an error if the day is greater than 28 for February in a non-leap year', () => {
-    expect(() => new JulianDay(2023, 2, 29)).toThrow('Invalid day');
-  });
-
-  test('Invalid calendar date: negative year', () => {
-    expect(() => new JulianDay(-2023, 12, 20)).toThrow('Invalid year');
-  });
-
-  test('Invalid calendar date: zero year', () => {
-    expect(() => new JulianDay(0, 7, 20)).toThrow('Invalid year');
-  });
+  const dateValidationTestCases: [number, Months, Days][] = [
+    [2024, 2, 30],
+    [2023, 2, 29],
+    [-2023, 12, 20],
+    [0, 7, 20],
+  ];
+  test.each(dateValidationTestCases)(
+    'should throw an error if the day is greater than 29 for February in a leap year',
+    (year: number, month: Months, day: Days) => {
+      expect(() => new JulianDay(year, month, day)).toThrow('Invalid date');
+    }
+  );
 });

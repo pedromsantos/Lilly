@@ -41,8 +41,11 @@ export class JulianDay {
   private readonly daysFromMarchToJuly = 153;
   private readonly numberOfDaysFromJanuary_1_4713_BCEToDecember_30_1899 = 32045;
 
+  private readonly invalidDate = 'Invalid date';
+
   constructor(private year: number, private month: Months, private day: Days) {
-    this.validateArguments();
+    this.validateYear();
+    this.validateMonth();
   }
 
   public julianDay(): number {
@@ -52,26 +55,26 @@ export class JulianDay {
       this.julianDaysInYear() +
       this.leapYearAdjustment() -
       this.leapYearCenturyAdjustment() +
-      this.leapYearQuadricentennialAdjustment() -
+      this.leapYearQuadriCenturyAdjustment() -
       this.numberOfDaysFromJanuary_1_4713_BCEToDecember_30_1899 -
       0.5
     );
   }
 
-  private validateArguments(): void {
+  private validateYear() {
     if (!Number.isInteger(this.year)) {
-      throw new Error('Invalid year');
-    }
-
-    const isLeap = () => (this.year & 3) == 0 && (this.year % 25 != 0 || (this.year & 15) == 0);
-
-    if (this.month === 2) {
-      if (isLeap() && this.day > 29) throw new Error('Invalid day');
-      if (!isLeap() && this.day > 28) throw new Error('Invalid day');
+      throw new Error(this.invalidDate);
     }
 
     if (this.year <= 0) {
-      throw new Error('Invalid year');
+      throw new Error(this.invalidDate);
+    }
+  }
+
+  private validateMonth() {
+    if (this.month === 2) {
+      if (this.isLeap() && this.day > 29) throw new Error(this.invalidDate);
+      if (!this.isLeap() && this.day > 28) throw new Error(this.invalidDate);
     }
   }
 
@@ -87,6 +90,10 @@ export class JulianDay {
     );
   }
 
+  private isLeap() {
+    return (this.year & 3) == 0 && (this.year % 25 != 0 || (this.year & 15) == 0);
+  }
+
   private julianDaysInYear(): number {
     return this.daysInYear * this.yearAdjustmentForJulian14MonthYear();
   }
@@ -99,7 +106,7 @@ export class JulianDay {
     return Math.floor(this.yearAdjustmentForJulian14MonthYear() / 100);
   }
 
-  private leapYearQuadricentennialAdjustment(): number {
+  private leapYearQuadriCenturyAdjustment(): number {
     return Math.floor(this.yearAdjustmentForJulian14MonthYear() / 400);
   }
 
