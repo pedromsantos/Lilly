@@ -37,7 +37,4 @@ jobs:
 
       - name: Build
         run: yarn build
-      
-      - name: Coveralls GitHub Action
-        uses: coverallsapp/github-action@v2
 
