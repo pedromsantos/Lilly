@@ -1,4 +1,4 @@
-# Glenn
+# Lilly
 
 Typescript module for working with astrology.
 
