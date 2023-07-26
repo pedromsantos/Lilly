@@ -27,6 +27,14 @@ export class Astronomy {
     this.ascendant = this.calculateAscendant();
   }
 
+  public get MidHeaven() {
+    return this.midHeaven;
+  }
+
+  public get Ascendant() {
+    return this.ascendant;
+  }
+
   public calculateJulianDay() {
     return (
       367.0 * this.year -

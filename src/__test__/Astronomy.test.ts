@@ -1,3 +1,4 @@
+import { Degrees } from '../AstroMath';
 import { Astronomy } from '../Astronomy';
 
 describe('JulianDate', () => {
@@ -74,9 +75,9 @@ describe('calculateLocalSiderealTime()', () => {
           .padStart(2, '0')}:00Z`
       );
 
-      const julianDate = new Astronomy(date, longitude);
+      const julianDate = new Astronomy(date, new Degrees(longitude));
 
-      expect(julianDate.calculateLocalSiderealTime()).toBeCloseTo(expected, 5);
+      expect(julianDate.calculateLocalSiderealTime().value).toBeCloseTo(expected, 5);
     }
   );
 });
@@ -105,9 +106,9 @@ describe('calculate MidHeaven()', () => {
           .padStart(2, '0')}:00Z`
       );
 
-      const julianDate = new Astronomy(date, longitude);
+      const julianDate = new Astronomy(date, new Degrees(longitude));
 
-      expect(julianDate.calculateMidHeaven()).toBeCloseTo(expected, 5);
+      expect(julianDate.calculateMidHeaven().value).toBeCloseTo(new Degrees(expected).value, 5);
     }
   );
 });
