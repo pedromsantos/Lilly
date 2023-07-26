@@ -1,35 +1,27 @@
 export class Degrees {
-  constructor(private readonly degrees: number) {}
+  constructor(private degrees: number) {
+    this.degrees = AstroMath.modulo(degrees, 360);
+  }
+
+  get value() {
+    return this.degrees;
+  }
+
+  add(other: Degrees) {
+    this.degrees = AstroMath.modulo(this.degrees + other.value, 360);
+  }
+
+  sub(other: Degrees) {
+    this.degrees = AstroMath.modulo(this.degrees - other.value, 360);
+  }
 
   toRadians() {
-    return this.degrees * (Math.PI / 180);
-  }
-}
-
-export class Radians {
-  constructor(private readonly radians: number) {}
-
-  toDegrees() {
-    return this.radians * (180 / Math.PI);
-  }
-}
-
-export class AstroMath {
-  sinFromDegrees(degrees: number) {
-    return Math.sin(new Degrees(degrees).toRadians());
+    return new Radians(this.degrees * (Math.PI / 180));
   }
 
-  cosFromDegrees(degrees: number) {
-    return Math.cos(new Degrees(degrees).toRadians());
-  }
-
-  tanFromDegrees(degrees: number) {
-    return Math.tan(new Degrees(degrees).toRadians());
-  }
-
-  decimalDegreesToDegreesMinutesSeconds(decimalDegrees: number) {
-    let degrees = Math.floor(decimalDegrees);
-    const minfloat = (decimalDegrees - degrees) * 60;
+  tooDegreesMinutesSeconds() {
+    let degrees = Math.floor(this.degrees);
+    const minfloat = (this.degrees - degrees) * 60;
     let minutes = Math.floor(minfloat);
     const secfloat = (minfloat - minutes) * 60;
     let seconds = Math.round(secfloat);
@@ -51,6 +43,32 @@ export class AstroMath {
     };
   }
 
+  sin() {
+    return Math.sin(new Degrees(this.degrees).toRadians().value);
+  }
+
+  cos() {
+    return Math.cos(new Degrees(this.degrees).toRadians().value);
+  }
+
+  tan() {
+    return Math.tan(new Degrees(this.degrees).toRadians().value);
+  }
+}
+
+export class Radians {
+  constructor(private readonly radians: number) {}
+
+  toDegrees() {
+    return new Degrees(this.radians * (180 / Math.PI));
+  }
+
+  get value() {
+    return this.radians;
+  }
+}
+
+export class AstroMath {
   isDegreeWithinCircleArc(arcLow: number, arcHigh: number, degree: number, edges = '[)') {
     const operators: { [key: string]: (a: number, b: number) => boolean } = {
       '[': (a, b) => a >= b,
@@ -84,7 +102,7 @@ export class AstroMath {
     return Math.min(high - low, 360 + low - high);
   }
 
-  modulo(number: number, mod: number) {
-    ((number % mod) + mod) % mod;
+  static modulo(number: number, mod: number) {
+    return ((number % mod) + mod) % mod;
   }
 }
