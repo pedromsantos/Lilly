@@ -28,7 +28,7 @@ describe('JulianDate', () => {
   ];
 
   test.each(testCases)(
-    'Convert date to Julian day',
+    'Convert date %p-%p-%pT%p:%p0 to Julian day %p',
     (year: number, month: number, day: number, hour: number, minute: number, expected: number) => {
       const isoDate = `${year.toString().padStart(4, '0')}-${month
         .toString()
@@ -41,17 +41,4 @@ describe('JulianDate', () => {
       expect(julianDate.calculate()).toBeCloseTo(expected, 2);
     }
   );
-
-  // const dateValidationTestCases: [number, number, number][] = [
-  //   [2024, 2, 30],
-  //   [2023, 2, 29],
-  //   [-2023, 12, 20],
-  //   [0, 7, 20],
-  // ];
-  // test.each(dateValidationTestCases)(
-  //   'should throw an error if the day is greater than 29 for February in a leap year',
-  //   (year: number, month: number, day: number) => {
-  //     expect(() => new JulianDay(new Date(year, month, day))).toThrow('Invalid date');
-  //   }
-  // );
 });
