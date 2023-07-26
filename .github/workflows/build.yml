@@ -38,11 +38,3 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
-      
-      - name: Coveralls GitHub Action
-        uses: coverallsapp/github-action@v2
-
