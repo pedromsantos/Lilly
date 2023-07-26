@@ -1,37 +1,57 @@
-import { Days, JulianDay, Months } from '../Astronomy';
+import { JulianDay } from '../Astronomy';
 
 describe('JulianDate', () => {
-  const testCases: [number, Months, Days, number][] = [
-    [2023, 7, 20, 2460145.5],
-    [1990, 1, 1, 2447892.5],
-    [2000, 2, 29, 2451603.5],
-    [1900, 12, 31, 2415384.5],
-    [1985, 2, 17, 2446113.5],
-    [2010, 6, 21, 2455368.5],
-    [1945, 8, 6, 2431673.5],
-    [2005, 11, 15, 2453689.5],
-    [1999, 4, 30, 2451298.5],
-    [1980, 9, 10, 2444492.5],
+  const testCases: [number, number, number, number, number, number][] = [
+    [1995, 10, 8, 12, 0, 2450000 - 1],
+    [1995, 10, 9, 4, 0, 2450000 - 8 / 24],
+    [1995, 10, 9, 5, 0, 2450000 - 7 / 24],
+    [1995, 10, 9, 6, 0, 2450000 - 6 / 24],
+    [1995, 10, 9, 7, 0, 2450000 - 5 / 24],
+    [1995, 10, 9, 8, 0, 2450000 - 4 / 24],
+    [1995, 10, 9, 9, 0, 2450000 - 3 / 24],
+    [1995, 10, 9, 10, 0, 2450000 - 2 / 24],
+    [1995, 10, 9, 11, 0, 2450000 - 1 / 24],
+    [1995, 10, 9, 12, 0, 2450000],
+    [1995, 10, 9, 13, 0, 2450000 + 1 / 24],
+    [1995, 10, 9, 14, 0, 2450000 + 2 / 24],
+    [1995, 10, 9, 15, 0, 2450000 + 3 / 24],
+    [1995, 10, 9, 16, 0, 2450000 + 4 / 24],
+    [1995, 10, 9, 17, 0, 2450000 + 5 / 24],
+    [1995, 10, 9, 18, 0, 2450000 + 6 / 24],
+    [1995, 10, 9, 19, 0, 2450000 + 7 / 24],
+    [1995, 10, 9, 20, 0, 2450000 + 8 / 24],
+    [1995, 10, 9, 24, 0, 2450000 + 0.5],
+    [1995, 10, 10, 12, 0, 2450000 + 1],
+    [2023, 2, 23, 12, 0, 2460000 - 1],
+    [2023, 2, 24, 12, 0, 2460000],
+    [2023, 2, 25, 12, 0, 2460000 + 1],
   ];
 
   test.each(testCases)(
     'Convert date to Julian day',
-    (year: number, month: Months, day: Days, expected: number) => {
-      const julianDate = new JulianDay(year, month, day);
-      expect(julianDate.julianDay()).toBeCloseTo(expected, 1);
+    (year: number, month: number, day: number, hour: number, minute: number, expected: number) => {
+      const isoDate = `${year.toString().padStart(4, '0')}-${month
+        .toString()
+        .padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hour
+        .toString()
+        .padStart(2, '0')}:${minute.toString().padStart(2, '0')}:00Z`;
+      const date = new Date(isoDate);
+
+      const julianDate = new JulianDay(date);
+      expect(julianDate.calculate()).toBeCloseTo(expected, 2);
     }
   );
 
-  const dateValidationTestCases: [number, Months, Days][] = [
-    [2024, 2, 30],
-    [2023, 2, 29],
-    [-2023, 12, 20],
-    [0, 7, 20],
-  ];
-  test.each(dateValidationTestCases)(
-    'should throw an error if the day is greater than 29 for February in a leap year',
-    (year: number, month: Months, day: Days) => {
-      expect(() => new JulianDay(year, month, day)).toThrow('Invalid date');
-    }
-  );
+  // const dateValidationTestCases: [number, number, number][] = [
+  //   [2024, 2, 30],
+  //   [2023, 2, 29],
+  //   [-2023, 12, 20],
+  //   [0, 7, 20],
+  // ];
+  // test.each(dateValidationTestCases)(
+  //   'should throw an error if the day is greater than 29 for February in a leap year',
+  //   (year: number, month: number, day: number) => {
+  //     expect(() => new JulianDay(new Date(year, month, day))).toThrow('Invalid date');
+  //   }
+  // );
 });

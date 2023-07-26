@@ -51,8 +51,6 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "moment": "^2.24.0",
-    "moment-timezone": "^0.5.26",
     "tz-lookup": "^6.1.24"
   },
   "devDependencies": {
